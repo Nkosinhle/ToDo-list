@@ -1,12 +1,5 @@
 const todoList = [{
-  name: 'make dinner',
-  dueDate: '2022-12-22',
-  dueTime: '13:51'
- },
- {
-  name: 'wash dishes',
-dueDate: '2022-12-22',
-dueTime: '14:51'
+  
 }];
 
 displayToDoList();
@@ -14,8 +7,7 @@ displayToDoList();
 function displayToDoList(){
   let todoListHTML = '';
 
-  for(let i =0; i < todoList.length; i++){
-    const todoObject = todoList[i];
+  todoList.forEach((todoObject, index) =>{
 
     const{name, dueDate, dueTime} = todoObject
     const html = `
@@ -23,18 +15,27 @@ function displayToDoList(){
     <div>${dueDate}</div>
     <div> ${dueTime}</div>
 
-    <button onclick = "
-      todoList.splice(${i}, 1);
-      displayToDoList();
-    " class= "delete-todo-button"
+    <button class= "delete-todo-button js-delete-todo-button"
     >Delete</button> 
   `;
     todoListHTML += html;
-  }
+  })
+  
 
   document.querySelector('.js-todo-list').innerHTML = todoListHTML;
+
+  document.querySelectorAll('.js-delete-todo-button')
+    .forEach((deleteButton, index)=>{
+      deleteButton.addEventListener('click', () =>{
+        todoList.splice(index, 1);
+        displayToDoList();
+      })
+    });
 }
 
+document.querySelector('.js-add-todo-button').addEventListener('click', ()=>{
+  addToTodo();
+})
 
 function addToTodo(){
   const inputElement = document.querySelector('.js-name-input');
